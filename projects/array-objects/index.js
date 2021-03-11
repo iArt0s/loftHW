@@ -9,13 +9,12 @@
  Пример:
    forEach([1, 2, 3], (el) => console.log(el))
  */
-   function forEach(array, fn) {
-    for (let i = 0; i < array.length; i++) {
-        fn(array[i], i, array)
-    }
+function forEach(array, fn) {
+  for (let i = 0; i < array.length; i++) {
+    fn(array[i], i, array);
+  }
 }
-forEach([1, 2, 3], (el) => console.log(el))
-
+forEach([1, 2, 3], (el) => console.log(el));
 
 /*
  Задание 2:
@@ -28,14 +27,13 @@ forEach([1, 2, 3], (el) => console.log(el))
  */
 
 function map(array, fn) {
-    const result = [];
-    for (let i = 0; i < array.length; i++) {
-        result.push(fn(array[i],));
-    }
-    return result;
+  const result = [];
+  for (let i = 0; i < array.length; i++) {
+    result.push(fn(array[i], i, array));
+  }
+  return result;
 }
-map([1, 2, 3], (el) => el ** 2) // [1, 4, 9]
-
+map([1, 2, 3], (el) => el ** 2); // [1, 4, 9]
 
 /*
  Задание 3:
@@ -46,7 +44,19 @@ map([1, 2, 3], (el) => el ** 2) // [1, 4, 9]
  Пример:
    reduce([1, 2, 3], (all, current) => all + current) // 6
  */
-function reduce(array, fn, initial) {}
+function reduce(array, fn, initial) {
+  let acc;
+  if (initial) {
+    acc = initial;
+  } else {
+    acc = array[0];
+  }
+
+  for (let i = initial ? 0 : 1; i < array.length; i++) {
+    acc = fn(acc, array[i], i, array);
+  }
+  return acc;
+}
 
 /*
  Задание 4:
@@ -58,13 +68,13 @@ function reduce(array, fn, initial) {}
  */
 
 function upperProps(obj) {
-    const arr = [];
-    for (const prop in obj) {
-        arr.push(prop.toUpperCase());
-    }
-    return arr;
+  const arr = [];
+  for (const prop in obj) {
+    arr.push(prop.toUpperCase());
+  }
+  return arr;
 }
-upperProps({ name: 'Сергей', lastName: 'Петров' }) вернет ['NAME', 'LASTNAME']
+// upperProps({ name: 'Сергей', lastName: 'Петров' }) вернет ['NAME', 'LASTNAME']
 /*
  Задание 5 *:
 
@@ -77,11 +87,11 @@ upperProps({ name: 'Сергей', lastName: 'Петров' }) вернет ['NA
    console.log(obj.foo); // 4
  */
 function createProxy(obj) {
-    return new Proxy(obj, {
-      set(target, props, value) {
-        return (target[props] = value ** 2);
-      },
-    });
+  return new Proxy(obj, {
+    set(target, props, value) {
+      return (target[props] = value ** 2);
+    },
+  });
 }
 
 export { forEach, map, reduce, upperProps, createProxy };
