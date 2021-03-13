@@ -23,14 +23,13 @@ function isAllTrue(array, fn) {
   } else if (typeof fn != 'function') {
     throw new Error('fn is not a function');
   }
-  const result = true;
 
   for (const n of array) {
     if (fn(n) === false) {
       return false;
     }
   }
-  return result;
+  return true;
 }
 
 /*
@@ -80,7 +79,7 @@ function returnBadArguments(fn, ...args) {
   }
 
   const result = [];
-  for (const item of [...args]) {
+  for (const item of args) {
     try {
       fn(item);
     } catch (err) {
@@ -122,9 +121,6 @@ function calculator(number = 0) {
       }, number),
     mul: (...args) =>
       args.reduce((acc, current) => {
-        if (current === 0) {
-          throw new Error('division by 0');
-        }
         return acc * current;
       }, number),
   };
